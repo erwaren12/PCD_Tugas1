@@ -43,7 +43,12 @@ def view_quantization(image_name: str) -> None:
                 mse, psnr = calculate_metrics(img_gray, quantized_img)
                 title_text = f"Kuantisasi {bit}-bit ({levels} Level)\nMSE: {mse:.2f} | PSNR: {psnr:.2f} dB"
             
-            print(f"[{bit}-bit] Diproses | Level: {levels:<3} | Error (MSE): {mse:<7.2f} | Kualitas (PSNR): {psnr:.2f} dB")
+            if psnr == float('inf'):
+                psnr_display = "Sempurna (\u221E)"
+            else:
+                psnr_display = f"{psnr:.2f} dB"
+                
+            print(f"[{bit}-bit] Diproses | Level: {levels:<3} | Error (MSE): {mse:<7.2f} | Kualitas (PSNR): {psnr_display}")
             
             ax_img = plt.subplot(2, 3, i + 1)
             ax_img.imshow(quantized_img, cmap='gray', vmin=0, vmax=255)
